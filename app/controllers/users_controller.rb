@@ -3,6 +3,7 @@
 # Controller for User model
 # Check the User model comments
 class UsersController < ApplicationController
+  before_action :redirect_if_authenticated, only: %i[create new]
   # @return [void]
   def create
     @user = User.new(user_params)

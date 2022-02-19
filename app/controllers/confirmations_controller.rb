@@ -2,6 +2,8 @@
 
 # For email confirmations of User
 class ConfirmationsController < ApplicationController
+  before_action :redirect_if_authenticated, only: %i[create new]
+
   # @return [void]
   def create
     # @type [User]
