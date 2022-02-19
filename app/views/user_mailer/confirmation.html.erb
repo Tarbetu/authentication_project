@@ -1,5 +1,4 @@
-<h1>User#confirmation</h1>
+<h1>The Confirmation</h1>
 
-<p>
-  <%= @greeting %>, find me in app/views/user_mailer/confirmation.html.erb
-</p>
+<p> You should confirm your email address by clicking this <%= link_to "link", 
+  edit_confirmation_url(@confirmation_token) %></p>

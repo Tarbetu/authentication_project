@@ -7,6 +7,9 @@ class User < ApplicationRecord
   # @type [ActiveSupport::Duration]
   CONFIRMATION_TOKEN_EXPIRATION = 10.minutes
 
+  # @type [String]
+  MAILER_FROM_EMAIL = 'never_reply_plz@example.com'
+
   before_save :downcase_email
 
   has_secure_password
@@ -18,8 +21,7 @@ class User < ApplicationRecord
 
   # @return [void]
   def confirm!
-    @confirmed_at = Time.current
-    save!
+    update! confirmed_at: Time.now
   end
 
   # @return [Boolean]
@@ -35,6 +37,12 @@ class User < ApplicationRecord
   # @return [ActiveSupport::MessageVerifier]
   def generate_confirmation_token
     signed_id expires_in: CONFIRMATION_TOKEN_EXPIRATION, purpose: :confirm_email
+  end
+
+  # @return [void]
+  def send_confirmation_email!
+    confirmation_token = generate_confirmation_token
+    UserMailer.confirmation(self, confirmation_token).deliver_now
   end
 
   private

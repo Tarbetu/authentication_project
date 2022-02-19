@@ -7,4 +7,5 @@ Rails.application.routes.draw do
 
   resource :users, only: %i[new create]
   resource :confirmations, only: %i[create edit new], param: :confirmation_token
+  resource :sessions, only: %i[new create destroy]
 end

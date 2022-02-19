@@ -8,6 +8,7 @@ class ConfirmationsController < ApplicationController
     @user = User.find_by(email: params[:user][:email].downcase)
 
     if @user.present? && @user.unconfirmed?
+      @user.send_confirmation_email!
       redirect_to root_path, notice: 'Check the email for confirmations'
     else
       redirect_to new_confirmation_path, alert: 'Confirmation is not available for this user'
