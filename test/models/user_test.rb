@@ -28,8 +28,8 @@ class UserTest < ActiveSupport::TestCase
       password: 'hakırboy666',
       password_confirmation: 'hakırboy666'
     )
-    user.valid?
-    assert_not_equal worst_case_email, user.email
+    puts user.email
+    assert_not_equal user.email, worst_case_email
   end
 
   test 'Email should be in a valid form' do
