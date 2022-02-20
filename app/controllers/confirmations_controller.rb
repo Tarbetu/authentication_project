@@ -22,7 +22,7 @@ class ConfirmationsController < ApplicationController
     # @type [User]
     @user = User.find_signed(params[:confirmation_token], purpose: :confirm_email)
 
-    if @user.present?
+    if @user.present? && @user.unconfirmed_or_reconfirming?
       if @user.confirm!
         login @user
         redirect_to root_path, notice: 'Confirmed!'

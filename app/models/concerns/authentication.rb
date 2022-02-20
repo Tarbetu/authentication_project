@@ -11,6 +11,11 @@ module Authentication
     helper_method :user_signed_in?
   end
 
+  # @return [void]
+  def authenticate_user!
+    redirect_to login_path, alert: 'You need to login to access that page.' unless user_signed_in?
+  end
+
   # @param user [User] The user which logins to
   # @return [void]
   def login(user)
