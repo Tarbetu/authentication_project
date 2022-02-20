@@ -58,7 +58,7 @@ module Authentication
   # @return [User, nil] The user which signed in now
   def current_user
     Current.user ||= if session[:current_user_id].present?
-                       ActiveSession.find(session[:current_active_session_id]).user
+                       ActiveSession.find(session[:current_active_session_id])&.user
                      elsif cookies.permanent.encrypted[:remember_token].present?
                        User.find_by(
                          remember_token: cookies.permanent.encrypted[:remember_token]

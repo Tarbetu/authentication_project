@@ -18,22 +18,21 @@
 
   <%= form.submit "Update Account" %>
 
-  <h2>Current Logins</h2>
   <% if @active_sessions.any? %>
+    <h2>Current Logins</h2>
     <table>
       <thead>
         <tr>
           <th>User Agent</th>
           <th>IP Address</th>
           <th>Signed In At</th>
+          <th>Sign Out</th>
         </tr>
       </thead>
       <tbody>
         <%= render @active_sessions %>
       </tbody>
     </table>
-  <% else %>
-    There is no sessions yet
   <% end %>
 <% end %>
 

@@ -9,6 +9,9 @@ Rails.application.routes.draw do
   resource :sessions, only: %i[new create destroy]
   resource :confirmations, only: %i[create edit new], param: :confirmation_token
   resource :passwords, except: %i[index destroy show], param: :password_reset_token
+  resources :active_sessions, only: [:destroy] do
+    collection { delete 'destroy_all' }
+  end
 
   root to: 'greeter#index'
 end
