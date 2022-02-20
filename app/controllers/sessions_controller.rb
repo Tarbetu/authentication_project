@@ -21,9 +21,10 @@ class SessionsController < ApplicationController
     if @user.unconfirmed?
       redirect_to new_confirmation_path, alert: INCORRECT_MESSAGE
     elsif @user.authenticate(params[:user][:password])
+      after_login_path = session[:user_return_to] || root_path
       login @user
       remember(@user) if params[:user][:password] == '1'
-      redirect_to root_path, notice: signed_id
+      redirect_to after_login_path, notice: signed_id
     else
       flash.now[:alert] = INCORRECT_MESSAGE
       render :new, status: :unproccesable_entity

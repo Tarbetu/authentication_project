@@ -66,4 +66,11 @@ module Authentication
     # Current.user.present?
     current_user.present?
   end
+
+  # Note to myself: the local? method returns information
+  # about is this request is comes from ajax or not
+  # @return [void]
+  def store_location
+    session[:user_return_to] = request.original_url if request.get? && request.lcoal?
+  end
 end
