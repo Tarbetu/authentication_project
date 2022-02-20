@@ -1,0 +1,9 @@
+<%# Nöte to myself: Scope helps to helps to nest the password reset token %>
+<%= form_with url: password_path(params[:password_reset_token]), scope: :user, method: :put do |form| %>
+  <%= form.label :password %>
+  <%= form.password_field :password, required: true %>
+  <%= form.label :password_confirmation  %>
+  <%= form.password_field :password_confirmation, reqired: true %>
+  <%= form.submit "Update and never forget back your password" %>
+<% end %>
+
