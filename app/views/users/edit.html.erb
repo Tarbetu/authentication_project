@@ -1,15 +1,39 @@
 <%= form_with model: @user, url: account_path, method: :put do |form| %>
   <%= render partial: "shared/form_errors", locals: { object: form.object } %>
+
   <%= form.label :email, "Current Email" %>
   <%= form.email_field :email, disabled: true %>
+
   <%= form.label :unconfirmed_email, "New Email" %>
   <%= form.text_field :unconfirmed_email %>
+
   <%= form.label :password, "Password (leave blank if you don't want to change" %>
   <%= form.password_field :password %>
+
   <%= form.label :password_confirmation %>
   <%= form.password_field :password_confirmation %>
+
   <%= form.label :current_password, "Current password (required)" %>
   <%= form.password.field :current_password, required: true %>
+
   <%= form.submit "Update Account" %>
+
+  <h2>Current Logins</h2>
+  <% if @active_sessions.any? %>
+    <table>
+      <thead>
+        <tr>
+          <th>User Agent</th>
+          <th>IP Address</th>
+          <th>Signed In At</th>
+        </tr>
+      </thead>
+      <tbody>
+        <%= render @active_sessions %>
+      </tbody>
+    </table>
+  <% else %>
+    There is no sessions yet
+  <% end %>
 <% end %>
 

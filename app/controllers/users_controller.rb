@@ -56,6 +56,7 @@ class UsersController < ApplicationController
   # @return [void]
   def set_current_user
     @user = current_user
+    @active_sessions = @user.active_sessions.order(created_at: :desc)
   end
 
   # @return [ActionController::Parameters]
