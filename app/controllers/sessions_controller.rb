@@ -10,24 +10,24 @@ class SessionsController < ApplicationController
   # @type [void]
   def create
     # @type [User, NilClass]
-    @user = User.find_by(email: params[:user][:email].downcase)
+    @user = User.authenticate_by(
+      email: params[:user][:email].downcase,
+      password: params[:user][:password]
+    )
 
     unless @user
       flash.now[:alert] = INCORRECT_MESSAGE
-      render :new, status: :unproccesable_entity
+      render :new, status: :unprocessable_entity
       return
     end
 
     if @user.unconfirmed?
       redirect_to new_confirmation_path, alert: INCORRECT_MESSAGE
-    elsif @user.authenticate(params[:user][:password])
+    else
       after_login_path = session[:user_return_to] || root_path
       login @user
-      remember(@user) if params[:user][:password] == '1'
-      redirect_to after_login_path, notice: signed_id
-    else
-      flash.now[:alert] = INCORRECT_MESSAGE
-      render :new, status: :unproccesable_entity
+      remember(@user) if params[:user][:remember_me] == '1'
+      redirect_to after_login_path, notice: 'Signed in.'
     end
   end
 

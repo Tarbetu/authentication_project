@@ -86,6 +86,26 @@ class User < ApplicationRecord
     UserMailer.password_reset(self, password_reset_token).deliver_now
   end
 
+  # NOTE: Remove this ugly method when you upgrade to rails 7.1
+  # @param attributes [#to_h]
+  # @return [User | NilClass]
+  def self.authenticate_by(attributes)
+    passwords, identifiers = attributes.to_h.partition do |name, _value|
+      !has_attribute?(name) && has_attribute("#{name}_digest")
+    end.map(&:to_h)
+
+    raise ArgumentError 'Wrong password arguments' if passwords.empty?
+    raise ArgumentError 'Wrong finder arguments' if identifiers.empty?
+
+    if (record = find_by(identifiers))
+      record if passwords.count do |name, value|
+                  record.public_send(:"authenticate_#{name}", value)
+                end == passwords.size
+    else
+      new(passwords)
+    end
+  end
+
   private
 
   # @return [void]
