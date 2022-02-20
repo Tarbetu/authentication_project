@@ -20,12 +20,15 @@ module Authentication
   # @return [void]
   def login(user)
     reset_session
-    session[:current_user_id] = user.id
+    active_session = user.active_sessions.create!
+    session[:current_active_session_id] = active_session.id
   end
 
   # @return [void]
   def logout
+    active_session = ActiveSession.find(session[:current_active_session_id])
     reset_session
+    active_session.destroy! if active_session.present?
   end
 
   # @return [void]
@@ -52,7 +55,7 @@ module Authentication
   # @return [User, nil] The user which signed in now
   def current_user
     Current.user ||= if session[:current_user_id].present?
-                       User.find(session[:current_user_id])
+                       ActiveSession.find(session[:current_active_session_id]).user
                      elsif cookies.permanent.encrypted[:remember_token].present?
                        User.find_by(
                          remember_token: cookies.permanent.encrypted[:remember_token]
