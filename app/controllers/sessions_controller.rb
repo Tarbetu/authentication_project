@@ -7,6 +7,7 @@ class SessionsController < ApplicationController
   # @type [String]
   INCORRECT_MESSAGE = 'Correct your email or password'
 
+  # @type [void]
   def create
     # @type [User, NilClass]
     @user = User.find_by(email: params[:user][:email].downcase)
@@ -21,6 +22,7 @@ class SessionsController < ApplicationController
       redirect_to new_confirmation_path, alert: INCORRECT_MESSAGE
     elsif @user.authenticate(params[:user][:password])
       login @user
+      remember(@user) if params[:user][:password] == '1'
       redirect_to root_path, notice: signed_id
     else
       flash.now[:alert] = INCORRECT_MESSAGE
@@ -28,7 +30,9 @@ class SessionsController < ApplicationController
     end
   end
 
+  # @type [void]
   def destroy
+    forget(current_user)
     logout
     redirect_to root_path, notice: 'Signed out.'
   end
