@@ -2,10 +2,14 @@
 
 # The main thing on the application
 # Every email written in lower case, thus we downcase before saving
+# This model able to create confirmation and password reset token
 # You might want to look at the related migrations comments.
 class User < ApplicationRecord
   # @type [ActiveSupport::Duration]
   CONFIRMATION_TOKEN_EXPIRATION = 10.minutes
+
+  # @type [ActiveSupport::Duration]
+  PASSWORD_RESET_TOKEN_EXPIRATION = 10.minutes
 
   # @type [String]
   MAILER_FROM_EMAIL = 'never_reply_plz@example.com'
@@ -43,6 +47,17 @@ class User < ApplicationRecord
   def send_confirmation_email!
     confirmation_token = generate_confirmation_token
     UserMailer.confirmation(self, confirmation_token).deliver_now
+  end
+
+  # @return [ActiveSupport::MessageVerifier]
+  def generate_password_reset_token
+    signed_id expires_in: PASSWORD_RESET_TOKEN_EXPIRATION, purpose: :reset_password
+  end
+
+  # @return [ActiveSupport::MessageVerifier]
+  def send_password_reset_email!
+    password_reset_token = generate_confirmation_token
+    UserMailer.password_reset(self, password_reset_token).deliver_now
   end
 
   private
