@@ -12,7 +12,7 @@ class UserMailer < ApplicationMailer
     @user = user
     @confirmation_token = confirmation_token
 
-    mail to: @user.email, subject: 'About Confirmation'
+    mail to: @user.confirmable_email, subject: 'About Confirmation'
   end
 
   # @return [void]
