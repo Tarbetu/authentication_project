@@ -25,6 +25,8 @@ module Authentication
       ip_address: request.ip
     )
     session[:current_active_session_id] = active_session.id
+
+    active_session
   end
 
   # @return [void]
@@ -41,16 +43,13 @@ module Authentication
 
   # @param user [User]
   # @return [void]
-  def remember(user)
-    user.regenerate_remember_token
-    cookies.permanent.encrypted[:remember_token] = user.remember_token
+  def remember(_user)
+    cookies.permanent.encrypted[:remember_token] = active_session.remember_token
   end
 
-  # @param user [User]
   # @return [void]
-  def forget(user)
+  def forget_active_session
     cookies.delete :remember_token
-    user.regenerate_remember_token
   end
 
   private

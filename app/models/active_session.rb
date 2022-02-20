@@ -4,4 +4,6 @@
 # A user may have multiply sessions
 class ActiveSession < ApplicationRecord
   belongs_to :user
+
+  has_secure_token :remember_token
 end

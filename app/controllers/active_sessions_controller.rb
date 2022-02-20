@@ -6,6 +6,7 @@ class ActiveSessionsController < ApplicationController
 
   # @return [void]
   def destroy_all
+    forget_active_session
     current_user.active_sessions.destroy_all
     reset_session
 
@@ -18,6 +19,7 @@ class ActiveSessionsController < ApplicationController
     @active.session.destroy
 
     unless current_user
+      forget_active_session
       reset_session
       redirect_to root_path, notice: 'Signed out'
       return
