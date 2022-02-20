@@ -69,7 +69,7 @@ module Authentication
   # Kontrol et!
   def user_signed_in?
     # Current.user.present?
-    current_user.present?
+    Current.user.present?
   end
 
   # Note to myself: the local? method returns information
