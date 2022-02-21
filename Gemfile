@@ -71,6 +71,6 @@ group :test do
   gem "webdrivers"
 end
 
-gem "bcrypt", "~> 3.1"
+gem "bcrypt", "~> 3.1.11"
 
 gem "kredis", "~> 1.1"

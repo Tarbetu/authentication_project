@@ -1,6 +1,8 @@
-ENV["RAILS_ENV"] ||= "test"
-require_relative "../config/environment"
-require "rails/test_help"
+# frozen_string_literal: true
+
+ENV['RAILS_ENV'] ||= 'test'
+require_relative '../config/environment'
+require 'rails/test_help'
 
 class ActiveSupport::TestCase
   # Run tests in parallel with specified workers
@@ -9,5 +11,19 @@ class ActiveSupport::TestCase
   # Setup all fixtures in test/fixtures/*.yml for all tests in alphabetical order.
   fixtures :all
 
-  # Add more helper methods to be used by all tests here...
+  # These helpers are copied from
+  # https://github.com/stevepolitodesign/rails-authentication-from-scratch/blob/main/test/test_helper.rb
+  def login(user, remember_user: nil)
+    post :sessions_path, params: {
+      user: {
+        email: user.email,
+        password: user.password,
+        remember_me: remember_user == true ? 1 : 0
+      }
+    }
+  end
+
+  def logout
+    session.delete(:current_active_session_id)
+  end
 end

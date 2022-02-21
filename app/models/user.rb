@@ -64,7 +64,7 @@ class User < ApplicationRecord
     !confirmed?
   end
 
-  # @return [ActiveSupport::MessageVerifier]
+  # @return [String]
   def generate_confirmation_token
     signed_id expires_in: CONFIRMATION_TOKEN_EXPIRATION, purpose: :confirm_email
   end
@@ -75,12 +75,12 @@ class User < ApplicationRecord
     UserMailer.confirmation(self, confirmation_token).deliver_now
   end
 
-  # @return [ActiveSupport::MessageVerifier]
+  # @return [String]
   def generate_password_reset_token
     signed_id expires_in: PASSWORD_RESET_TOKEN_EXPIRATION, purpose: :reset_password
   end
 
-  # @return [ActiveSupport::MessageVerifier]
+  # @return [void]
   def send_password_reset_email!
     password_reset_token = generate_confirmation_token
     UserMailer.password_reset(self, password_reset_token).deliver_now
@@ -91,7 +91,7 @@ class User < ApplicationRecord
   # @return [User | NilClass]
   def self.authenticate_by(attributes)
     passwords, identifiers = attributes.to_h.partition do |name, _value|
-      !has_attribute?(name) && has_attribute("#{name}_digest")
+      !has_attribute?(name) && has_attribute?("#{name}_digest")
     end.map(&:to_h)
 
     raise ArgumentError 'Wrong password arguments' if passwords.empty?
@@ -103,6 +103,7 @@ class User < ApplicationRecord
                 end == passwords.size
     else
       new(passwords)
+      nil
     end
   end
 

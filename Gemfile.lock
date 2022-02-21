@@ -218,7 +218,7 @@ PLATFORMS
   x86_64-linux
 
 DEPENDENCIES
-  bcrypt (~> 3.1)
+  bcrypt (~> 3.1.11)
   bootsnap
   capybara
   debug
