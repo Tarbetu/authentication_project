@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+# This Controller manages the password resetting actions
 class PasswordsController < ApplicationController
   before_action :redirect_if_authenticated
 

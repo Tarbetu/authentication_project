@@ -5,7 +5,7 @@
 class UsersController < ApplicationController
   before_action :authenticate_user!, only: %i[edit destroy update]
   before_action :redirect_if_authenticated, only: %i[create new]
-  before_action :set_user, only: %i[update edit]
+  before_action :set_current_user, only: %i[update edit]
   # @return [void]
   def create
     @user = User.new(create_user_params)

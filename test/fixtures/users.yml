@@ -1,9 +1,6 @@
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
+# Note that this model can't used in Controllers
 best_user_ever:
   email: best_user_is_best@bestybest.org
   password_digest: <%= Digest::SHA256.hexdigest "Hi. This is my password" %>
-  confirmed_at: <%= Time.now %>
-
-<%# two: %>
-<%#   email: MyString %>

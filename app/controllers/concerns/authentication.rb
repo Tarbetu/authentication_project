@@ -13,7 +13,7 @@ module Authentication
 
   # @return [void]
   def authenticate_user!
-    redirect_to login_path, alert: 'You need to login to access that page.' unless user_signed_in?
+    redirect_to new_sessions_path, alert: 'You need to login to access that page.' unless user_signed_in?
   end
 
   # @param user [User] The user which logins to
@@ -41,9 +41,9 @@ module Authentication
     redirect_to root_path, alert: 'Already signed in' if user_signed_in?
   end
 
-  # @param user [User]
+  # @param active_session [ActiveSession]
   # @return [void]
-  def remember(_user)
+  def remember(active_session)
     cookies.permanent.encrypted[:remember_token] = active_session.remember_token
   end
 
@@ -54,19 +54,18 @@ module Authentication
 
   private
 
-  # @return [User, nil] The user which signed in now
+  # @return [nil]
   def current_user
-    Current.user ||= if session[:current_user_id].present?
-                       ActiveSession.find(session[:current_active_session_id])&.user
-                     elsif cookies.permanent.encrypted[:remember_token].present?
-                       User.find_by(
-                         remember_token: cookies.permanent.encrypted[:remember_token]
-                       )
-                     end
+    Current.user = if session[:current_active_session_id].present?
+                     ActiveSession.find(session[:current_active_session_id])&.user
+                   elsif cookies.permanent.encrypted[:remember_token].present?
+                     User.find_by(
+                       remember_token: cookies.permanent.encrypted[:remember_token]
+                     )
+                   end
   end
 
   # @return [Boolean]
-  # Kontrol et!
   def user_signed_in?
     # Current.user.present?
     Current.user.present?

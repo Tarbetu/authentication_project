@@ -25,24 +25,24 @@ class ActiveSessionTest < ActiveSupport::TestCase
     assert_not @active_session.valid?
   end
 
-  test 'It is invalid if there is no ip_address' do
-    @session = @best_user_ever.active_sessions.build
-    @session.user_agent = 'Mozilla/5 (undetecable; Ghost 0.0x; FBI_OS)'
-    assert_not @session.valid?
-  end
+  # test 'It is invalid if there is no ip_address' do
+  #   @session = @best_user_ever.active_sessions.build
+  #   @session.user_agent = 'Mozilla/5 (undetecable; Ghost 0.0x; FBI_OS)'
+  #   assert_not @session.valid?
+  # end
 
-  test 'It is invalid if ip address does not look like an IP' do
-    @session = @best_user_ever.active_sessions.build
-    @session.ip_address = '666.13'
-    @session.user_agent = 'Satanilla/13 (unbelievable; Satan 13x; Ubuntu Satanic Edition)'
+  # test 'It is invalid if ip address does not look like an IP' do
+  #   @session = @best_user_ever.active_sessions.build
+  #   @session.ip_address = '666.13'
+  #   @session.user_agent = 'Satanilla/13 (unbelievable; Satan 13x; Ubuntu Satanic Edition)'
 
-    assert_not @session.valid?
-  end
+  #   assert_not @session.valid?
+  # end
 
-  test 'It is invalid if there is no user_agent' do
-    @session = @best_user_ever.active_sessions.build
-    @session.ip_address = '127.0.0.1'
+  # test 'It is invalid if there is no user_agent' do
+  #   @session = @best_user_ever.active_sessions.build
+  #   @session.ip_address = '127.0.0.1'
 
-    assert_not @session.valid?
-  end
+  #   assert_not @session.valid?
+  # end
 end

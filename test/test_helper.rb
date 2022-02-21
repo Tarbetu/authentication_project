@@ -13,8 +13,17 @@ class ActiveSupport::TestCase
 
   # These helpers are copied from
   # https://github.com/stevepolitodesign/rails-authentication-from-scratch/blob/main/test/test_helper.rb
+  def current_user
+    if session[:current_active_session_id].present?
+      ActiveSession.find_by(id: session[:current_active_session_id])&.user
+    else
+      cookies[:remember_token].present?
+      ActiveSession.find_by(remember_token: cookies[:remember_token])&.user
+    end
+  end
+
   def login(user, remember_user: nil)
-    post :sessions_path, params: {
+    post sessions_path, params: {
       user: {
         email: user.email,
         password: user.password,

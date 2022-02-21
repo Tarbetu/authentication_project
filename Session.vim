@@ -11,17 +11,13 @@ set shortmess=aoO
 argglobal
 %argdel
 $argadd test/controllers/users_controller_test.rb
-edit test/controllers/users_controller_test.rb
+edit test/controllers/passwords_controller_test.rb
 let s:save_splitbelow = &splitbelow
 let s:save_splitright = &splitright
 set splitbelow splitright
 wincmd _ | wincmd |
 vsplit
 1wincmd h
-wincmd w
-wincmd _ | wincmd |
-split
-1wincmd k
 wincmd w
 let &splitbelow = s:save_splitbelow
 let &splitright = s:save_splitright
@@ -33,33 +29,8 @@ set winheight=1
 set winminwidth=0
 set winwidth=1
 exe 'vert 1resize ' . ((&columns * 95 + 95) / 190)
-exe '2resize ' . ((&lines * 22 + 24) / 48)
 exe 'vert 2resize ' . ((&columns * 94 + 95) / 190)
-exe '3resize ' . ((&lines * 23 + 24) / 48)
-exe 'vert 3resize ' . ((&columns * 94 + 95) / 190)
 argglobal
-setlocal fdm=manual
-setlocal fde=0
-setlocal fmr={{{,}}}
-setlocal fdi=#
-setlocal fdl=0
-setlocal fml=1
-setlocal fdn=20
-setlocal fen
-silent! normal! zE
-let &fdl = &fdl
-let s:l = 1 - ((0 * winheight(0) + 23) / 46)
-if s:l < 1 | let s:l = 1 | endif
-keepjumps exe s:l
-normal! zt
-keepjumps 1
-normal! 0
-wincmd w
-argglobal
-if bufexists("app/controllers/users_controller.rb") | buffer app/controllers/users_controller.rb | else | edit app/controllers/users_controller.rb | endif
-if &buftype ==# 'terminal'
-  silent file app/controllers/users_controller.rb
-endif
 balt test/controllers/users_controller_test.rb
 setlocal fdm=manual
 setlocal fde=0
@@ -71,17 +42,17 @@ setlocal fdn=20
 setlocal fen
 silent! normal! zE
 let &fdl = &fdl
-let s:l = 1 - ((0 * winheight(0) + 11) / 22)
+let s:l = 2 - ((1 * winheight(0) + 23) / 46)
 if s:l < 1 | let s:l = 1 | endif
 keepjumps exe s:l
 normal! zt
-keepjumps 1
+keepjumps 2
 normal! 0
 wincmd w
 argglobal
-if bufexists("config/routes.rb") | buffer config/routes.rb | else | edit config/routes.rb | endif
+if bufexists("app/controllers/passwords_controller.rb") | buffer app/controllers/passwords_controller.rb | else | edit app/controllers/passwords_controller.rb | endif
 if &buftype ==# 'terminal'
-  silent file config/routes.rb
+  silent file app/controllers/passwords_controller.rb
 endif
 balt app/controllers/users_controller.rb
 setlocal fdm=manual
@@ -94,22 +65,32 @@ setlocal fdn=20
 setlocal fen
 silent! normal! zE
 let &fdl = &fdl
-let s:l = 1 - ((0 * winheight(0) + 11) / 23)
+let s:l = 38 - ((15 * winheight(0) + 23) / 46)
 if s:l < 1 | let s:l = 1 | endif
 keepjumps exe s:l
 normal! zt
-keepjumps 1
-normal! 0
+keepjumps 38
+normal! 019|
 wincmd w
+2wincmd w
 exe 'vert 1resize ' . ((&columns * 95 + 95) / 190)
-exe '2resize ' . ((&lines * 22 + 24) / 48)
 exe 'vert 2resize ' . ((&columns * 94 + 95) / 190)
-exe '3resize ' . ((&lines * 23 + 24) / 48)
-exe 'vert 3resize ' . ((&columns * 94 + 95) / 190)
 tabnext 1
-badd +1 test/controllers/users_controller_test.rb
-badd +1 app/controllers/users_controller.rb
-badd +0 config/routes.rb
+badd +78 test/controllers/users_controller_test.rb
+badd +6 app/controllers/users_controller.rb
+badd +16 app/controllers/concerns/authentication.rb
+badd +33 app/views/users/edit.html.erb
+badd +1 app/views/users/new.html.erb
+badd +1 config/routes.rb
+badd +1 app/controllers/sessions_controller.rb
+badd +92 app/models/user.rb
+badd +2 test/test_helper.rb
+badd +6 test/fixtures/users.yml
+badd +12 app/models/active_session.rb
+badd +28 test/models/active_session_test.rb
+badd +1 app/models/current.rb
+badd +0 test/controllers/passwords_controller_test.rb
+badd +0 app/controllers/passwords_controller.rb
 if exists('s:wipebuf') && len(win_findbuf(s:wipebuf)) == 0 && getbufvar(s:wipebuf, '&buftype') isnot# 'terminal'
   silent exe 'bwipe ' . s:wipebuf
 endif
