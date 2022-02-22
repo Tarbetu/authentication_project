@@ -4,6 +4,7 @@
 # Check the authentication concern
 class SessionsController < ApplicationController
   before_action :redirect_if_authenticated, only: %i[create new]
+  before_action :authenticate_user!, only: %i[destroy]
   # @type [String]
   INCORRECT_MESSAGE = 'Correct your email or password'
 
@@ -26,7 +27,7 @@ class SessionsController < ApplicationController
     else
       after_login_path = session[:user_return_to] || root_path
       active_session = login @user
-      remember(@user) if params[:user][:remember_me] == '1'
+      remember(active_session) if params[:user][:remember_me] == '1'
       redirect_to after_login_path, notice: 'Signed in.'
     end
   end
