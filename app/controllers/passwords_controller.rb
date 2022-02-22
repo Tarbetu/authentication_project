@@ -11,6 +11,11 @@ class PasswordsController < ApplicationController
   # @type [String]
   INVALID_MESSAGE = 'Invalid or expired token'
 
+  # Forget password page
+  # @return [void]
+  def new; end
+
+  # Creates new password token
   # @return [void]
   def create
     # @type [User, NilClass]
@@ -24,7 +29,7 @@ class PasswordsController < ApplicationController
       @user.send_password_reset_email!
       redirect_to root_path, notice: OK_MESSAGE
     else
-      redirect_to new_confirmation_path, alert: CONFIRM_MESSAGE
+      redirect_to new_confirmations_path, alert: CONFIRM_MESSAGE
     end
   end
 
@@ -32,27 +37,29 @@ class PasswordsController < ApplicationController
   def edit
     # @type [User, NilClass]
     @user = User.find_signed(params[:password_reset_token], purpose: :reset_password)
-    if @user.present && @user.unconfirmed?
-      redirect_to new_confirmation_path, alert: CONFIRM_MESSAGE
-    else
+    if @user.nil?
       redirect_to new_password_path, alert: INVALID_MESSAGE
+    elsif @user.unconfirmed?
+      redirect_to new_confirmations_path, alert: CONFIRM_MESSAGE
     end
   end
 
+  # It updates the user password
   # @return [void]
   def update
     # @type [User, NilClass]
     @user = User.find_signed(params[:password_reset_token], purpose: :reset_password)
+
     unless @user
       flash.now[:alert] = INVALID_MESSAGE
-      render :new, status: :unproccesable_entity
+      render :new, status: :unprocessable_entity
       return
     end
 
     if @user.unconfirmed?
-      redirect_to new_confirmation_path, alert: CONFIRM_MESSAGE
+      redirect_to new_confirmations_path, alert: CONFIRM_MESSAGE
     elsif @user.update(password_params)
-      redirect_to login_path, notice: 'OK! Now you can login'
+      redirect_to new_sessions_path, notice: 'OK! Now you can login'
     else
       flash.now[:alert] = @user.errors.full_messages.to_sentence
       render :edit, status: :unprocessable_entity
