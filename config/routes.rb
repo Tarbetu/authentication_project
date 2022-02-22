@@ -3,7 +3,7 @@
 Rails.application.routes.draw do
   # You might think that using resource only for index is strange.
   # This looks familiar and it's clear that what i'm doing to
-  resources :greeters, only: %i[index]
+  resources :greeter, only: %i[index]
 
   resource :users, except: %i[show index]
   resource :sessions, only: %i[new create destroy]
