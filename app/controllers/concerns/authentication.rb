@@ -57,17 +57,16 @@ module Authentication
   # @return [nil]
   def current_user
     Current.user = if session[:current_active_session_id].present?
-                     ActiveSession.find(session[:current_active_session_id])&.user
+                     ActiveSession.find_by(id: session[:current_active_session_id])&.user
                    elsif cookies.permanent.encrypted[:remember_token].present?
-                     User.find_by(
-                       remember_token: cookies.permanent.encrypted[:remember_token]
+                     ActiveSession.find_by(
+                       remember_token: cookies.permanent.encrypted[:remember_token]&.user
                      )
                    end
   end
 
   # @return [Boolean]
   def user_signed_in?
-    # Current.user.present?
     Current.user.present?
   end
 
@@ -75,6 +74,6 @@ module Authentication
   # about is this request is comes from ajax or not
   # @return [void]
   def store_location
-    session[:user_return_to] = request.original_url if request.get? && request.lcoal?
+    session[:user_return_to] = request.original_url if request.get? && request.local?
   end
 end
