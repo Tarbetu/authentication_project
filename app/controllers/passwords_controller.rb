@@ -29,7 +29,7 @@ class PasswordsController < ApplicationController
       @user.send_password_reset_email!
       redirect_to root_path, notice: OK_MESSAGE
     else
-      redirect_to new_confirmations_path, alert: CONFIRM_MESSAGE
+      redirect_to new_confirmation_path, alert: CONFIRM_MESSAGE
     end
   end
 
@@ -40,7 +40,7 @@ class PasswordsController < ApplicationController
     if @user.nil?
       redirect_to new_password_path, alert: INVALID_MESSAGE
     elsif @user.unconfirmed?
-      redirect_to new_confirmations_path, alert: CONFIRM_MESSAGE
+      redirect_to new_confirmation_path, alert: CONFIRM_MESSAGE
     end
   end
 
@@ -57,7 +57,7 @@ class PasswordsController < ApplicationController
     end
 
     if @user.unconfirmed?
-      redirect_to new_confirmations_path, alert: CONFIRM_MESSAGE
+      redirect_to new_confirmation_path, alert: CONFIRM_MESSAGE
     elsif @user.update(password_params)
       redirect_to new_sessions_path, notice: 'OK! Now you can login'
     else

@@ -49,7 +49,7 @@ class PasswordsControllerTest < ActionDispatch::IntegrationTest
       }
     }
 
-    assert_redirected_to new_confirmations_path
+    assert_redirected_to new_confirmation_path
     assert_equal flash[:alert], PasswordsController::CONFIRM_MESSAGE
   end
 
@@ -70,7 +70,7 @@ class PasswordsControllerTest < ActionDispatch::IntegrationTest
     token = @unconfirmed_user.generate_password_reset_token
 
     get edit_password_path(token)
-    assert_redirected_to new_confirmations_path
+    assert_redirected_to new_confirmation_path
     assert_equal flash[:alert], PasswordsController::CONFIRM_MESSAGE
   end
 
@@ -119,7 +119,7 @@ class PasswordsControllerTest < ActionDispatch::IntegrationTest
       }
     }
 
-    assert_redirected_to new_confirmations_path
+    assert_redirected_to new_confirmation_path
     assert_equal flash[:alert], PasswordsController::CONFIRM_MESSAGE
   end
 end
