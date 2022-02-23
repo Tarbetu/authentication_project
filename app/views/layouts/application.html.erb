@@ -10,7 +10,13 @@
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
   </head>
   <body>
-    <%= render "layouts/navbar" %>
-    <%= yield %>
+    <header>
+      <%= render "shared/navbar" %>
+      <%= render "shared/alerts" %>
+    </header>
+
+    <main class="bg-light bg-gradient container-fluid">
+      <%= yield %>
+    </main>
   </body>
 </html>

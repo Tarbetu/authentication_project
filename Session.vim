@@ -10,12 +10,28 @@ endif
 set shortmess=aoO
 argglobal
 %argdel
-$argadd app/views/layouts/application.html.erb
-set stal=2
-tabnew
-tabrewind
-edit app/views/layouts/application.html.erb
+$argadd app/views/sessions/new.html.erb
+edit app/views/users/new.html.erb
+let s:save_splitbelow = &splitbelow
+let s:save_splitright = &splitright
+set splitbelow splitright
+wincmd _ | wincmd |
+vsplit
+1wincmd h
+wincmd w
+let &splitbelow = s:save_splitbelow
+let &splitright = s:save_splitright
+wincmd t
+let s:save_winminheight = &winminheight
+let s:save_winminwidth = &winminwidth
+set winminheight=0
+set winheight=1
+set winminwidth=0
+set winwidth=1
+exe 'vert 1resize ' . ((&columns * 95 + 95) / 190)
+exe 'vert 2resize ' . ((&columns * 94 + 95) / 190)
 argglobal
+balt app/views/greeter/index.html.erb
 setlocal fdm=manual
 setlocal fde=0
 setlocal fmr={{{,}}}
@@ -26,16 +42,19 @@ setlocal fdn=20
 setlocal fen
 silent! normal! zE
 let &fdl = &fdl
-let s:l = 13 - ((12 * winheight(0) + 22) / 45)
+let s:l = 19 - ((18 * winheight(0) + 23) / 46)
 if s:l < 1 | let s:l = 1 | endif
 keepjumps exe s:l
 normal! zt
-keepjumps 13
-normal! 024|
-tabnext
-edit app/views/layouts/_navbar.html.erb
+keepjumps 19
+normal! 030|
+wincmd w
 argglobal
-balt app/views/layouts/navbar.html.erb
+if bufexists("app/views/sessions/new.html.erb") | buffer app/views/sessions/new.html.erb | else | edit app/views/sessions/new.html.erb | endif
+if &buftype ==# 'terminal'
+  silent file app/views/sessions/new.html.erb
+endif
+balt app/views/passwords/new.html.erb
 setlocal fdm=manual
 setlocal fde=0
 setlocal fmr={{{,}}}
@@ -46,23 +65,32 @@ setlocal fdn=20
 setlocal fen
 silent! normal! zE
 let &fdl = &fdl
-let s:l = 12 - ((11 * winheight(0) + 22) / 45)
+let s:l = 18 - ((17 * winheight(0) + 23) / 46)
 if s:l < 1 | let s:l = 1 | endif
 keepjumps exe s:l
 normal! zt
-keepjumps 12
-normal! 039|
-tabnext 2
-set stal=1
-badd +0 app/views/layouts/application.html.erb
-badd +3 app/views/layouts/navbar.html.erb
-badd +0 app/views/layouts/_navbar.html.erb
-badd +10 config/routes.rb
+keepjumps 18
+normal! 030|
+wincmd w
+2wincmd w
+exe 'vert 1resize ' . ((&columns * 95 + 95) / 190)
+exe 'vert 2resize ' . ((&columns * 94 + 95) / 190)
+tabnext 1
+badd +1 app/views/sessions/new.html.erb
+badd +53 app/assets/stylesheets/application.scss
+badd +18 app/views/layouts/application.html.erb
+badd +36 app/views/users/new.html.erb
+badd +0 app/views/users/edit.html.erb
+badd +3 app/views/greeter/index.html.erb
+badd +21 app/views/layouts/_navbar.html.erb
+badd +1 app/views/passwords/new.html.erb
 if exists('s:wipebuf') && len(win_findbuf(s:wipebuf)) == 0 && getbufvar(s:wipebuf, '&buftype') isnot# 'terminal'
   silent exe 'bwipe ' . s:wipebuf
 endif
 unlet! s:wipebuf
 set winheight=1 winwidth=20 shortmess=filnxtToOFc
+let &winminheight = s:save_winminheight
+let &winminwidth = s:save_winminwidth
 let s:sx = expand("<sfile>:p:r")."x.vim"
 if filereadable(s:sx)
   exe "source " . fnameescape(s:sx)

@@ -1,5 +1,19 @@
-<%= form_with url: passwords_path, scope: :user do |form| %>
-  <%= form.email_field :email, required: true %>
-  <%= form.submit "Forget your password? Well..." %>
-<% end %>
-
+<main class="user-form text-center">
+  <%= form_with url: passwords_path, scope: :user, class: "form-signin" do |form| %>
+    <h1 class="h2 mb-3 fw-normal">Forgetting your password? How dare you!</h1>
+    <div class="form-floating">
+      <%= form.email_field :email,
+        required: true,
+        placeholder: "fish@fishfish.com",
+        class: "form-control mb-3"
+      %>
+      <%= form.label :email %>
+    </div>
+    <div class="form-floating">
+      <%= form.submit "Well...",
+        class: "w-100 btn btn-lg btn-primary"
+      %>
+    </div>
+  <% end %>
+</main>
+<%= render "shared/session_links", purpose: :password %>

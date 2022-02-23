@@ -1,9 +1,9 @@
-<main class="login-form text-center">
+<main class="user-form text-center">
   <%= form_with url: new_sessions_path, scope: :user, class: "form-signin" do |form| %>
     <h1 class="h2 mb-3 fw-normal">Sign-in for True Authorization Experience</h1>
 
     <div class="form-floating">
-      <%= form.email_field :email, 
+      <%= form.email_field :email,
         required: true,
         placeholer: "name@example.com",
         class: "form-control"
@@ -15,16 +15,17 @@
       <%= form.password_field :password,
         required: true,
         placeholder: "Password",
-        class: "form-control"
+        class: "form-control last-password"
       %>
       <%= form.label :password %>
     </div>
-    
+
     <div class="checkbox mb-3">
       <%= form.label :remember_me %>
       <%= form.check_box :remember_me %>
     </div>
-  
+
     <%= form.submit "Sign In", class: "w-100 btn btn-lg btn-primary" %>
   <% end %>
 </main>
+<%= render "shared/session_links", purpose: :login %>

@@ -1,12 +1,36 @@
-<%= form_with model: @user, url: new_users_path do |form| %>
-  <%= render partial: "shared/form_errors", locals: { object: form.object } %>
-    <%= form.label :email %>
-    <%= form.email_field :email, required: true %>
-    <%= form.label :password %>
-    <%= form.password_field :password, requred: true %>
-    <%= form.label :password_confirmation %>
-    <%= form.password_field :password_confirmation, required: true %>
-<% end %>
+<main class="user-form text-center">
+  <%= form_with model: @user, url: new_users_path, class: "form-signin" do |form| %>
+    <%= render partial: "shared/form_errors", locals: { object: form.object } %>
+    <h1 class="h1 mb-3 fw-normal">Sign-up for get spams every day</h1>
 
-<%# Stimulus ile doğrulama kontrol edilebilir %>
+    <div class="form-floating">
+      <%= form.email_field :email,
+        required: true,
+        placeholder: "spam_me@everyday.com",
+        class: "form-control"
+      %>
+      <%= form.label :email %>
+    </div>
 
+    <div class="form-floating">
+      <%= form.password_field :password,
+        requred: true,
+        placeholder: "Password",
+        class: "form-control password"
+      %>
+      <%= form.label :password %>
+    </div>
+
+    <div class="form-floating">
+      <%= form.password_field :password_confirmation,
+        requred: true,
+        placeholder: "Password",
+        class: "form-control last-password"
+      %>
+      <%= form.label :password_confirmation %>
+    </div>
+
+    <%= form.submit "Register", class: "w-100 btn btn-lg btn-primary" %>
+  <% end %>
+</main>
+<%= render "shared/session_links", purpose: :register %>
