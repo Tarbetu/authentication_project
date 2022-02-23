@@ -54,7 +54,8 @@ module Authentication
 
   private
 
-  # @return [nil]
+  # Note that this method has a side effect!
+  # @return [User]
   def current_user
     Current.user = if session[:current_active_session_id].present?
                      ActiveSession.find_by(id: session[:current_active_session_id])&.user
@@ -63,6 +64,7 @@ module Authentication
                        remember_token: cookies.permanent.encrypted[:remember_token]&.user
                      )
                    end
+    Current.user
   end
 
   # @return [Boolean]

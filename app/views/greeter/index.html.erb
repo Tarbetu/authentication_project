@@ -1,5 +1,14 @@
 <main class="d-flex align-items-center flex-column position-absolute start-50 top-50 translate-middle">
   <h1 class="fw-light text-decoration-underline">Welcome To Authorization Project!</h1>
-  <p>You must authorize yourself or... else!</p>
-  <%= link_to "Authorize!", new_users_path, class: "btn btn-primary" %>
+  <% unless user_signed_in?  %>
+    <p>You must authorize yourself or... else!</p>
+    <%= link_to "Authorize!", new_users_path, class: "btn btn-primary" %>
+  <% else %>
+    <p>Welcome our dear user!</p>
+    <p>We will bang this email address with spams: </p>
+    <p class="fw-bold"><%= current_user.email %></p>
+    <p>Anyway, you can sending a post!</p>
+    <%= link_to "That's okay... I can send a post", new_post_path,
+      class: "btn btn-secondary" %>
+  <% end %>
 </main>

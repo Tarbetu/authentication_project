@@ -2,7 +2,7 @@
   <div class="container-fluid">
     <%= link_to "AuthP", root_path, class: "navbar-brand" %>
 
-    <button 
+    <button
         class="navbar-toggler" type="button"
         data-bs-toggle="collapse" data-bs-target="#navbarNav"
         aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -12,15 +12,32 @@
     <div id="navbarNav" class="sticky-top collapse navbar-collapse justify-content-between">
       <ul class="navbar-nav d-flex align-items-center">
         <li class="nav-item d-flex">
-          <%= link_to "All posts", posts_path, class: "nav-link" %>
+          <%= link_to "About", about_greeter_index_path, class: "nav-link" %>
         </li>
-        <li class="nav-item d-flex">
-          <%= link_to "Login", new_sessions_path, class: "nav-link" %>
-        </li>
+        <% if user_signed_in? %>
+         <li class="nav-item d-flex">
+           <%= link_to "All posts", posts_path, class: "nav-link" %>
+         </li>
+         <li class="nav-item d-flex">
+           <%= link_to "The User", edit_users_path, class: "nav-link" %>
+         </li>
+        <% else %>
+         <li class="nav-item d-flex">
+           <%= link_to "Login", new_sessions_path, class: "nav-link" %>
+         </li>
+        <% end %>
       </ul>
-      <%= link_to "Register", new_users_path,
-        class: "btn btn-secondary d-flex"
+      <% unless user_signed_in? %>
+        <%= link_to "Sign up", new_users_path,
+          class: "btn btn-secondary d-flex"
+        %>
+      <% else %>
+        <%= link_to "Logout", active_session_path(current_user.active_sessions.last),
+        method: :delete,
+        "data-turbo-method": "delete",
+        class: "btn btn-danger d-flex"
       %>
+      <% end %>
     </div>
 
   </div>
