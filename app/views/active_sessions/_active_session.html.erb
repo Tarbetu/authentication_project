@@ -2,5 +2,9 @@
   <td><%= active_session.user_agent %></td>
   <td><%= active_session.ip_address %></td>
   <td><%= active_session.created_at %></td>
-  <td><%= button_to "Sign out", active_session_path(active_session), method: :delete %>
+  <td><%= link_to "Sign out",
+    active_session_path(active_session),
+    "data-turbo-method": "delete",
+    class: "btn btn-danger"
+  %>
 </tr>
