@@ -21,6 +21,7 @@ class User < ApplicationRecord
 
   has_secure_password
   has_many :active_sessions, dependent: :destroy
+  has_many :posts
 
   validates :email,
             format: { with: URI::MailTo::EMAIL_REGEXP },
