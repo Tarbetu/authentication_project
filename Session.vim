@@ -10,28 +10,12 @@ endif
 set shortmess=aoO
 argglobal
 %argdel
-$argadd test/controllers/users_controller_test.rb
-edit test/controllers/active_sessions_controller_test.rb
-let s:save_splitbelow = &splitbelow
-let s:save_splitright = &splitright
-set splitbelow splitright
-wincmd _ | wincmd |
-vsplit
-1wincmd h
-wincmd w
-let &splitbelow = s:save_splitbelow
-let &splitright = s:save_splitright
-wincmd t
-let s:save_winminheight = &winminheight
-let s:save_winminwidth = &winminwidth
-set winminheight=0
-set winheight=1
-set winminwidth=0
-set winwidth=1
-exe 'vert 1resize ' . ((&columns * 95 + 95) / 190)
-exe 'vert 2resize ' . ((&columns * 94 + 95) / 190)
+$argadd app/views/layouts/application.html.erb
+set stal=2
+tabnew
+tabrewind
+edit app/views/layouts/application.html.erb
 argglobal
-balt test/controllers/confirmations_controller_test.rb
 setlocal fdm=manual
 setlocal fde=0
 setlocal fmr={{{,}}}
@@ -42,19 +26,16 @@ setlocal fdn=20
 setlocal fen
 silent! normal! zE
 let &fdl = &fdl
-let s:l = 42 - ((41 * winheight(0) + 23) / 46)
+let s:l = 13 - ((12 * winheight(0) + 22) / 45)
 if s:l < 1 | let s:l = 1 | endif
 keepjumps exe s:l
 normal! zt
-keepjumps 42
-normal! 08|
-wincmd w
+keepjumps 13
+normal! 024|
+tabnext
+edit app/views/layouts/_navbar.html.erb
 argglobal
-if bufexists("app/controllers/active_sessions_controller.rb") | buffer app/controllers/active_sessions_controller.rb | else | edit app/controllers/active_sessions_controller.rb | endif
-if &buftype ==# 'terminal'
-  silent file app/controllers/active_sessions_controller.rb
-endif
-balt app/controllers/sessions_controller.rb
+balt app/views/layouts/navbar.html.erb
 setlocal fdm=manual
 setlocal fde=0
 setlocal fmr={{{,}}}
@@ -65,55 +46,23 @@ setlocal fdn=20
 setlocal fen
 silent! normal! zE
 let &fdl = &fdl
-let s:l = 19 - ((18 * winheight(0) + 23) / 46)
+let s:l = 12 - ((11 * winheight(0) + 22) / 45)
 if s:l < 1 | let s:l = 1 | endif
 keepjumps exe s:l
 normal! zt
-keepjumps 19
-normal! 021|
-wincmd w
-exe 'vert 1resize ' . ((&columns * 95 + 95) / 190)
-exe 'vert 2resize ' . ((&columns * 94 + 95) / 190)
-tabnext 1
-badd +79 test/controllers/passwords_controller_test.rb
-badd +78 test/controllers/users_controller_test.rb
-badd +13 app/controllers/passwords_controller.rb
-badd +0 app/controllers/users_controller.rb
-badd +1 app/views/passwords/edit.html.erb
-badd +74 app/models/user.rb
-badd +60 app/controllers/concerns/authentication.rb
-badd +33 app/views/users/edit.html.erb
-badd +1 app/views/users/new.html.erb
+keepjumps 12
+normal! 039|
+tabnext 2
+set stal=1
+badd +0 app/views/layouts/application.html.erb
+badd +3 app/views/layouts/navbar.html.erb
+badd +0 app/views/layouts/_navbar.html.erb
 badd +10 config/routes.rb
-badd +32 app/controllers/sessions_controller.rb
-badd +18 test/test_helper.rb
-badd +1 test/fixtures/users.yml
-badd +12 app/models/active_session.rb
-badd +28 test/models/active_session_test.rb
-badd +1 app/models/current.rb
-badd +11 db/schema.rb
-badd +7 app/views/user_mailer/password_reset.html.erb
-badd +3 app/views/user_mailer/password_reset.text.erb
-badd +58 test/controllers/confirmations_controller_test.rb
-badd +22 app/controllers/confirmations_controller.rb
-badd +4 app/views/user_mailer/confirmation.html.erb
-badd +3 app/views/user_mailer/confirmation.text.erb
-badd +0 app/views/confirmations/new.html.erb
-badd +106 test/controllers/sessions_controller_test.rb
-badd +2 app/views/sessions/create.html.erb
-badd +1 app/views/sessions/destroy.html.erb
-badd +1 app/views/sessions/new.html.erb
-badd +1 -p
-badd +23 test/controllers/active_sessions_controller_test.rb
-badd +4 test/controllers/greeter_controller_test.rb
-badd +8 app/controllers/active_sessions_controller.rb
 if exists('s:wipebuf') && len(win_findbuf(s:wipebuf)) == 0 && getbufvar(s:wipebuf, '&buftype') isnot# 'terminal'
   silent exe 'bwipe ' . s:wipebuf
 endif
 unlet! s:wipebuf
 set winheight=1 winwidth=20 shortmess=filnxtToOFc
-let &winminheight = s:save_winminheight
-let &winminwidth = s:save_winminwidth
 let s:sx = expand("<sfile>:p:r")."x.vim"
 if filereadable(s:sx)
   exe "source " . fnameescape(s:sx)

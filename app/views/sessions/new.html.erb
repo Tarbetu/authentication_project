@@ -1,13 +1,30 @@
-<%= form_with url: new_sessions_path, scope: :user do |form| %>
-  <%= form.label :email %>
-  <%= form.email_field :email, required: true %>
+<main class="login-form text-center">
+  <%= form_with url: new_sessions_path, scope: :user, class: "form-signin" do |form| %>
+    <h1 class="h2 mb-3 fw-normal">Sign-in for True Authorization Experience</h1>
 
-  <%= form.label :password %>
-  <%= form.password_field :password, required: true %>
+    <div class="form-floating">
+      <%= form.email_field :email, 
+        required: true,
+        placeholer: "name@example.com",
+        class: "form-control"
+      %>
+      <%= form.label :email %>
+    </div>
+
+    <div class="form-floating">
+      <%= form.password_field :password,
+        required: true,
+        placeholder: "Password",
+        class: "form-control"
+      %>
+      <%= form.label :password %>
+    </div>
+    
+    <div class="checkbox mb-3">
+      <%= form.label :remember_me %>
+      <%= form.check_box :remember_me %>
+    </div>
   
-  <%= form.label :remember_me %>
-  <%= form.check_box :remember_me %>
-
-  <%= form.submit "Sign In" %>
-<% end %>
-
+    <%= form.submit "Sign In", class: "w-100 btn btn-lg btn-primary" %>
+  <% end %>
+</main>
