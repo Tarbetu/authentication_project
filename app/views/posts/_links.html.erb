@@ -1,0 +1,9 @@
+<% button_class = "btn btn-primary" %>
+<div class="button-group">
+  <% if purpose == :show %>
+    <%= link_to "Edit this post", edit_post_path(@post), class: button_class %>
+    <%= link_to "Back to posts", posts_path, class: button_class %>
+  <% elsif purpose == :index %>
+    <%= link_to "New post", new_post_path, class: button_class %>
+  <% end %>
+</div>
