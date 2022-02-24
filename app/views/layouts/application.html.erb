@@ -13,6 +13,9 @@
     <header>
       <%= render "shared/navbar" %>
       <%= render "shared/alerts" %>
+      <% if user_signed_in? && current_user.role.change_role? %>
+        <%= render "shared/control_panel" %>
+      <% end %>
     </header>
 
     <main class="bg-light bg-gradient container-fluid">

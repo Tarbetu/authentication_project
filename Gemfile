@@ -76,5 +76,3 @@ gem 'bcrypt', '~> 3.1'
 gem 'kredis', '~> 1.1'
 
 gem "bootstrap", "~> 5.1"
-
-gem "enummer", "~> 1.0"

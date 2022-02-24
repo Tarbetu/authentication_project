@@ -1,8 +1,21 @@
-<%= form_with url: passwords_path(params[:password_reset_token]), scope: :user, method: :put do |form| %>
-  <%= form.label :password %>
-  <%= form.password_field :password, required: true %>
-  <%= form.label :password_confirmation  %>
-  <%= form.password_field :password_confirmation, reqired: true %>
-  <%= form.submit "Update and never forget back your password" %>
-<% end %>
+<main class="user-form text-center">
+  <%= form_with url: password_path(params[:password_reset_token]), scope: :user, method: :put, class: "form-signin" do |form| %>
+    <div>
+      <h1 class="h1 mb-3 fw-normal">If you forgot your password today, you will be a thief later!</h1>
+      <div class="blockquote-footer">
+        A toxic Turkish elemantary school teacher
+      </div>
+    </div>
+    <div class="form-floating">
+     <%= form.password_field :password, required: true, class: "form-control password" %>
+     <%= form.label :password %>
+    </div>
 
+    <div class="form-floating">
+      <%= form.label :password_confirmation  %>
+      <%= form.password_field :password_confirmation, reqired: true, class: "form-control last-password" %>
+    </div>
+
+    <%= form.submit "Update and never forget back your password", class: "w-100 btn btn-lg btn-primary" %>
+  <% end %>
+</main>

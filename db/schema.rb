@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_02_24_115559) do
+ActiveRecord::Schema[7.0].define(version: 2022_02_24_193931) do
   create_table "active_sessions", force: :cascade do |t|
     t.integer "user_id", null: false
     t.datetime "created_at", null: false
@@ -35,7 +35,6 @@ ActiveRecord::Schema[7.0].define(version: 2022_02_24_115559) do
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer "permissions", default: 0, null: false
   end
 
   create_table "users", force: :cascade do |t|
@@ -45,9 +44,12 @@ ActiveRecord::Schema[7.0].define(version: 2022_02_24_115559) do
     t.datetime "confirmed_at"
     t.string "password_digest", null: false
     t.string "unconfirmed_email"
+    t.integer "role_id", null: false
     t.index ["email"], name: "index_users_on_email", unique: true
+    t.index ["role_id"], name: "index_users_on_role_id"
   end
 
   add_foreign_key "active_sessions", "users", on_delete: :cascade
   add_foreign_key "posts", "users"
+  add_foreign_key "users", "roles"
 end

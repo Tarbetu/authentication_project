@@ -32,11 +32,21 @@
           class: "btn btn-secondary d-flex"
         %>
       <% else %>
-        <%= link_to "Logout", active_session_path(current_user.active_sessions.last),
-        method: :delete,
-        "data-turbo-method": "delete",
-        class: "btn btn-danger d-flex"
-      %>
+        <div class="d-flex justify-content-center">
+          <% if current_user.role.change_role? %>
+              <button
+                class="btn btn-warning d-flex mr-2"
+                type="button"
+                data-bs-toggle="modal" data-bs-target="#manageUser">
+                Rule Them All!</button>
+          <% end %>
+
+          <%= link_to "Logout", active_session_path(current_user.active_sessions.last),
+            method: :delete,
+            "data-turbo-method": "delete",
+            class: "btn btn-danger d-flex"
+          %>
+      </div>
       <% end %>
     </div>
 
