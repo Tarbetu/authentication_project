@@ -9,6 +9,7 @@ class UsersController < ApplicationController
   # @return [void]
   def create
     @user = User.new(create_user_params)
+    @user.role = Role.find_by(name: 'Peasant')
 
     if @user.save
       @user.send_confirmation_email!

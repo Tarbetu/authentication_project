@@ -10,8 +10,8 @@ endif
 set shortmess=aoO
 argglobal
 %argdel
-$argadd app/views/sessions/new.html.erb
-edit app/views/users/new.html.erb
+$argadd app/controllers/users_controller.rb
+edit db/seeds.rb
 let s:save_splitbelow = &splitbelow
 let s:save_splitright = &splitright
 set splitbelow splitright
@@ -31,7 +31,7 @@ set winwidth=1
 exe 'vert 1resize ' . ((&columns * 95 + 95) / 190)
 exe 'vert 2resize ' . ((&columns * 94 + 95) / 190)
 argglobal
-balt app/views/greeter/index.html.erb
+balt app/controllers/users_controller.rb
 setlocal fdm=manual
 setlocal fde=0
 setlocal fmr={{{,}}}
@@ -42,19 +42,19 @@ setlocal fdn=20
 setlocal fen
 silent! normal! zE
 let &fdl = &fdl
-let s:l = 19 - ((18 * winheight(0) + 23) / 46)
+let s:l = 8 - ((7 * winheight(0) + 23) / 46)
 if s:l < 1 | let s:l = 1 | endif
 keepjumps exe s:l
 normal! zt
-keepjumps 19
-normal! 030|
+keepjumps 8
+normal! 0
 wincmd w
 argglobal
-if bufexists("app/views/sessions/new.html.erb") | buffer app/views/sessions/new.html.erb | else | edit app/views/sessions/new.html.erb | endif
+if bufexists("app/models/role.rb") | buffer app/models/role.rb | else | edit app/models/role.rb | endif
 if &buftype ==# 'terminal'
-  silent file app/views/sessions/new.html.erb
+  silent file app/models/role.rb
 endif
-balt app/views/passwords/new.html.erb
+balt app/models/user.rb
 setlocal fdm=manual
 setlocal fde=0
 setlocal fmr={{{,}}}
@@ -65,25 +65,21 @@ setlocal fdn=20
 setlocal fen
 silent! normal! zE
 let &fdl = &fdl
-let s:l = 18 - ((17 * winheight(0) + 23) / 46)
+let s:l = 5 - ((4 * winheight(0) + 23) / 46)
 if s:l < 1 | let s:l = 1 | endif
 keepjumps exe s:l
 normal! zt
-keepjumps 18
-normal! 030|
+keepjumps 5
+normal! 0
 wincmd w
-2wincmd w
 exe 'vert 1resize ' . ((&columns * 95 + 95) / 190)
 exe 'vert 2resize ' . ((&columns * 94 + 95) / 190)
 tabnext 1
-badd +1 app/views/sessions/new.html.erb
-badd +53 app/assets/stylesheets/application.scss
-badd +18 app/views/layouts/application.html.erb
-badd +36 app/views/users/new.html.erb
-badd +0 app/views/users/edit.html.erb
-badd +3 app/views/greeter/index.html.erb
-badd +21 app/views/layouts/_navbar.html.erb
-badd +1 app/views/passwords/new.html.erb
+badd +1 db/seeds.rb
+badd +16 app/controllers/users_controller.rb
+badd +1 app/views/user_mailer/confirmation.html.erb
+badd +22 app/models/user.rb
+badd +0 app/models/role.rb
 if exists('s:wipebuf') && len(win_findbuf(s:wipebuf)) == 0 && getbufvar(s:wipebuf, '&buftype') isnot# 'terminal'
   silent exe 'bwipe ' . s:wipebuf
 endif

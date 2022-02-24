@@ -22,6 +22,7 @@ class User < ApplicationRecord
   has_secure_password
   has_many :active_sessions, dependent: :destroy
   has_many :posts
+  belongs_to :role
 
   validates :email,
             format: { with: URI::MailTo::EMAIL_REGEXP },
@@ -83,7 +84,7 @@ class User < ApplicationRecord
 
   # @return [void]
   def send_password_reset_email!
-    password_reset_token = generate_confirmation_token
+    password_reset_token = generate_password_reset_token
     UserMailer.password_reset(self, password_reset_token).deliver_now
   end
 
