@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_02_24_193931) do
+ActiveRecord::Schema[7.0].define(version: 2022_02_24_201147) do
   create_table "active_sessions", force: :cascade do |t|
     t.integer "user_id", null: false
     t.datetime "created_at", null: false
@@ -20,6 +20,14 @@ ActiveRecord::Schema[7.0].define(version: 2022_02_24_193931) do
     t.string "remember_token", null: false
     t.index ["remember_token"], name: "index_active_sessions_on_remember_token", unique: true
     t.index ["user_id"], name: "index_active_sessions_on_user_id"
+  end
+
+  create_table "grants", force: :cascade do |t|
+    t.string "name"
+    t.integer "role_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["role_id"], name: "index_grants_on_role_id"
   end
 
   create_table "posts", force: :cascade do |t|
@@ -37,6 +45,15 @@ ActiveRecord::Schema[7.0].define(version: 2022_02_24_193931) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "roles_grants", id: false, force: :cascade do |t|
+    t.integer "role_id", null: false
+    t.integer "grant_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["grant_id"], name: "index_roles_grants_on_grant_id"
+    t.index ["role_id"], name: "index_roles_grants_on_role_id"
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "email", null: false
     t.datetime "created_at", null: false
@@ -50,6 +67,9 @@ ActiveRecord::Schema[7.0].define(version: 2022_02_24_193931) do
   end
 
   add_foreign_key "active_sessions", "users", on_delete: :cascade
+  add_foreign_key "grants", "roles"
   add_foreign_key "posts", "users"
+  add_foreign_key "roles_grants", "grants"
+  add_foreign_key "roles_grants", "roles"
   add_foreign_key "users", "roles"
 end
