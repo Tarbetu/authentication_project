@@ -1,8 +1,31 @@
 # frozen_string_literal: true
 
-# Roles and permissions created with this file
+# Roles and grants created with this file
 
-Role.create!(name: 'Peasant', permissions: %i[read write])
-Role.create!(name: 'Moderator', permissions: %i[read write moderate])
-Role.create!(name: 'Administrator', permissions: %i[read write moderate change_role])
-Role.create!(name: 'Banned', permissions: %i[read])
+peasant = Role.create!(name: 'Peasant') # The first, id: 1
+moderator = Role.create!(name: 'Moderator') # id: 2
+admin = Role.create!(name: 'Administrator')
+banned = Role.create!(name: 'Banned')
+
+read   = Grant.create!(name: 'read') # The first, id: 1
+write  = Grant.create!(name: 'write') # id: 2
+delete = Grant.create!(name: 'delete_and_edit_others')
+manage = Grant.create!(name: 'manage_users')
+
+banned << read
+banned.save!
+
+peasant << read
+peasant << write
+peasant.save!
+
+moderator << read
+moderator << write
+moderator << delete
+moderator.save!
+
+admin << read
+admin << write
+admin << delete
+admin << manage
+admin.save!

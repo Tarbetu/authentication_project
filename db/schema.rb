@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_02_24_201147) do
+ActiveRecord::Schema[7.0].define(version: 2022_02_25_085528) do
   create_table "active_sessions", force: :cascade do |t|
     t.integer "user_id", null: false
     t.datetime "created_at", null: false
@@ -39,19 +39,19 @@ ActiveRecord::Schema[7.0].define(version: 2022_02_24_201147) do
     t.index ["user_id"], name: "index_posts_on_user_id"
   end
 
-  create_table "roles", force: :cascade do |t|
-    t.string "name"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
-  create_table "roles_grants", id: false, force: :cascade do |t|
+  create_table "role_model_associations", force: :cascade do |t|
     t.integer "role_id", null: false
     t.integer "grant_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["grant_id"], name: "index_roles_grants_on_grant_id"
-    t.index ["role_id"], name: "index_roles_grants_on_role_id"
+    t.index ["grant_id"], name: "index_role_model_associations_on_grant_id"
+    t.index ["role_id"], name: "index_role_model_associations_on_role_id"
+  end
+
+  create_table "roles", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "users", force: :cascade do |t|
@@ -69,7 +69,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_02_24_201147) do
   add_foreign_key "active_sessions", "users", on_delete: :cascade
   add_foreign_key "grants", "roles"
   add_foreign_key "posts", "users"
-  add_foreign_key "roles_grants", "grants"
-  add_foreign_key "roles_grants", "roles"
+  add_foreign_key "role_model_associations", "grants"
+  add_foreign_key "role_model_associations", "roles"
   add_foreign_key "users", "roles"
 end
