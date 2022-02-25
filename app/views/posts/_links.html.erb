@@ -2,9 +2,11 @@
 <% back_button = link_to "Back to posts", posts_path, class: button_class %>
 <div class="btn-group mt-2">
   <% if purpose == :show %>
-    <%= link_to "Edit this post", edit_post_path(@post), class: button_class %>
+    <% if owner? %>
+      <%= link_to "Edit this post", edit_post_path(@post), class: button_class %>
+    <% end %>
     <%= back_button %>
-  <% elsif purpose == :index %>
+  <% elsif purpose == :index && current_user.granted_for?("write?") %>
     <%= link_to "New post", new_post_path, class: button_class %>
   <% elsif purpose == :edit %>
     <%= link_to "Link to this post", @post, class: button_class %>

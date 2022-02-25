@@ -5,6 +5,11 @@
 class PostsController < ApplicationController
   before_action :authenticate_user!
   before_action :set_post, only: %i[show edit update destroy]
+  before_action :check_permissions_for_read, only: %i[index show]
+  before_action :check_permissions_for_write, except: %i[index show]
+  before_action :check_ownership, only: %i[edit update destroy]
+
+  helper_method :owner?
 
   # GET /posts or /posts.json
   def index
@@ -71,5 +76,15 @@ class PostsController < ApplicationController
   # Only allow a list of trusted parameters through.
   def post_params
     params.require(:post).permit(:title, :body)
+  end
+
+  # Check ownership or current user can moderate others
+  def owner?
+    (@post.user.id == current_user.id && current_user.granted_for?('write')) || current_user.granted_for?('can_delete_and_edit_others?')
+  end
+
+  # redirect if not owner
+  def check_ownership
+    redirect_to root_path unless owner?
   end
 end

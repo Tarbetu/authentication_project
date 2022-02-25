@@ -7,6 +7,7 @@ moderator = Role.create!(name: 'Moderator') # id: 2
 admin = Role.create!(name: 'Administrator')
 banned = Role.create!(name: 'Banned')
 
+# Keep in mind, the grants name will used in methods name
 read   = Grant.create!(name: 'read') # The first, id: 1
 write  = Grant.create!(name: 'write') # id: 2
 delete = Grant.create!(name: 'delete_and_edit_others')

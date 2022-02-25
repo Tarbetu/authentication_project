@@ -7,6 +7,8 @@
 class User < ApplicationRecord
   attr_accessor :current_password
 
+  kredis_unique_list :grants
+
   # @type [ActiveSupport::Duration]
   CONFIRMATION_TOKEN_EXPIRATION = 10.minutes
 
@@ -18,6 +20,7 @@ class User < ApplicationRecord
 
   before_save :downcase_email
   before_save :downcase_unconfirmed_email
+  after_touch :cache_grants
 
   has_secure_password
   has_many :active_sessions, dependent: :destroy
@@ -106,6 +109,28 @@ class User < ApplicationRecord
     else
       new(passwords)
       nil
+    end
+  end
+
+  # Cache the user grants into Redis
+  # It helps to access user grants informations more efficently
+  # @returns [void]
+  def cache_grants
+    grants.clear
+    role.grants.pluck(:name).each do |grant|
+      grants.append(grant)
+    end
+  end
+
+  # This method queries and caches the grants field
+  # @param grant [String]
+  # @return [Boolean]
+  def granted_for?(grant)
+    if grants.elements.empty?
+      cache_grants
+      role.grants.find_by(name: grant).present?
+    else
+      grants.elements.include? grant
     end
   end
 

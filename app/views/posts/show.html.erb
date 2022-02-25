@@ -1,11 +1,11 @@
-<p style="color: green"><%= notice %></p>
-
 <%= render @post %>
 
 <div>
+  <% if owner? %>
   <%= button_to "Destroy this post", @post,
     "data-turbo-method": :delete,
     class: "btn btn-danger"
   %>
+  <% end %>
   <%= render "links", purpose: :show %>
 </div>

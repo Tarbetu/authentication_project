@@ -4,6 +4,6 @@
      <%= post.title %>
     </h1>
     <%= content_tag :div, post.body, class: "card-text" %>
-    <%= post.user.email %>
+    <%= post.user.email %> - <%= post.user.role.name %>
   </div>
 </div>

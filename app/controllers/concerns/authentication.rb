@@ -26,6 +26,7 @@ module Authentication
     )
     session[:current_active_session_id] = active_session.id
 
+    user.cache_grants
     active_session
   end
 
@@ -50,6 +51,15 @@ module Authentication
   # @return [void]
   def forget_active_session
     cookies.delete :remember_token
+  end
+
+  # Macro for checking permissions. For example:
+  # check_permissions_for_read
+  Grant.pluck(:name).each do |grant_name|
+    define_method("check_permissions_for_#{grant_name}") do
+      permission = current_user.granted_for?(grant_name)
+      redirect_to root_path unless permission
+    end
   end
 
   private
