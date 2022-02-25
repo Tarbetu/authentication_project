@@ -12,20 +12,20 @@ write  = Grant.create!(name: 'write') # id: 2
 delete = Grant.create!(name: 'delete_and_edit_others')
 manage = Grant.create!(name: 'manage_users')
 
-banned << read
+banned.grants << read
 banned.save!
 
-peasant << read
-peasant << write
+peasant.grants << read
+peasant.grants << write
 peasant.save!
 
-moderator << read
-moderator << write
-moderator << delete
+moderator.grants << read
+moderator.grants << write
+moderator.grants << delete
 moderator.save!
 
-admin << read
-admin << write
-admin << delete
-admin << manage
+admin.grants << read
+admin.grants << write
+admin.grants << delete
+admin.grants << manage
 admin.save!
