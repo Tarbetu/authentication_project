@@ -3,7 +3,8 @@
 # Manages the status of the User
 class Role < ApplicationRecord
   has_many :users
-  has_many :grants, through: :role_model_association
+  has_many :role_model_associations
+  has_many :grants, through: :role_model_associations
 
   # @return [Boolean]
   def any_grants?; end
