@@ -13,7 +13,7 @@
     <header>
       <%= render "shared/navbar" %>
       <%= render "shared/alerts" %>
-      <% if user_signed_in? && current_user.role.can_manage_users? %>
+      <% if user_signed_in? && current_user.granted_for?("manage_users") %>
         <%= render "shared/control_panel" %>
       <% end %>
     </header>
