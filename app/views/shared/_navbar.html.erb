@@ -18,36 +18,39 @@
          <li class="nav-item d-flex">
            <%= link_to "All posts", posts_path, class: "nav-link" %>
          </li>
-         <li class="nav-item d-flex">
-           <%= link_to "The User", edit_users_path, class: "nav-link" %>
-         </li>
-        <% else %>
-         <li class="nav-item d-flex">
-           <%= link_to "Login", new_sessions_path, class: "nav-link" %>
-         </li>
         <% end %>
       </ul>
-      <% unless user_signed_in? %>
-        <%= link_to "Sign up", new_users_path,
-          class: "btn btn-secondary d-flex"
-        %>
-      <% else %>
-        <div class="d-flex justify-content-center">
+      <div class="d-flex justify-content-around">
+        <% unless user_signed_in? %>
+          <button
+              class="btn btn-light d-flex"
+              type="button"
+              data-bs-toggle="modal" data-bs-target="#signInModal">
+              Sign-in</button>
+          <button
+              class="btn btn-secondary d-flex"
+              type="button"
+              data-bs-toggle="modal" data-bs-target="#signupModal">
+              Sign-up</button>
+        <% else %>
+          <button
+              class="btn btn-info d-flex"
+              type="button"
+              data-bs-toggle="modal" data-bs-target="#editUserModal">
+              <%= current_user.email %></button>
           <% if current_user.role.can_manage_users? %>
               <button
                 class="btn btn-warning d-flex mr-2"
-                type="button"
                 data-bs-toggle="modal" data-bs-target="#manageUser">
                 Rule Them All!</button>
           <% end %>
-
           <%= link_to "Logout", active_session_path(current_user.active_sessions.last),
             method: :delete,
             "data-turbo-method": "delete",
             class: "btn btn-danger d-flex"
           %>
-      </div>
-      <% end %>
+        <% end %>
+       </div>
     </div>
   </div>
 </nav>

@@ -1,31 +1,33 @@
-<main class="user-form text-center">
-  <%= form_with url: sessions_path, scope: :user, class: "form-signin" do |form| %>
-    <h1 class="h2 mb-3 fw-normal">Sign-in for True Authorization Experience</h1>
+<%= turbo_frame_tag "user-login" do %>
+  <main class="user-form text-center">
+    <%= form_with url: sessions_path, scope: :user, class: "form-signin", data: { "turbo-frame": "_top" } do |form| %>
+      <h1 class="h2 mb-3 fw-normal">Sign-in for True Authorization Experience</h1>
 
-    <div class="form-floating">
-      <%= form.email_field :email,
-        required: true,
-        placeholer: "name@example.com",
-        class: "form-control"
-      %>
-      <%= form.label :email %>
-    </div>
+      <div class="form-floating">
+        <%= form.email_field :email,
+          required: true,
+          placeholer: "name@example.com",
+          class: "form-control"
+        %>
+        <%= form.label :email %>
+      </div>
 
-    <div class="form-floating">
-      <%= form.password_field :password,
-        required: true,
-        placeholder: "Password",
-        class: "form-control last-password"
-      %>
-      <%= form.label :password %>
-    </div>
+      <div class="form-floating">
+        <%= form.password_field :password,
+          required: true,
+          placeholder: "Password",
+          class: "form-control last-password"
+        %>
+        <%= form.label :password %>
+      </div>
 
-    <div class="checkbox mb-3">
-      <%= form.label :remember_me %>
-      <%= form.check_box :remember_me %>
-    </div>
+      <div class="checkbox mb-3">
+        <%= form.label :remember_me %>
+        <%= form.check_box :remember_me %>
+      </div>
 
-    <%= form.submit "Sign In", class: "w-100 btn btn-lg btn-primary" %>
-  <% end %>
-</main>
+      <%= form.submit "Sign In", class: "w-100 btn btn-lg btn-primary" %>
+    <% end %>
+  </main>
+<% end %>
 <%= render "shared/session_links", purpose: :login %>

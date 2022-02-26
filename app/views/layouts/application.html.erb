@@ -15,6 +15,23 @@
       <%= render "shared/alerts" %>
       <% if user_signed_in? && current_user.granted_for?("manage_users") %>
         <%= render "shared/control_panel" %>
+      <% elsif user_signed_in? %>
+        <%= render "shared/user_actions",
+          modal_id: "editUserModal",
+          action_id: "user-edit",
+          action_path: edit_users_path
+        %>
+      <% elsif !user_signed_in? %>
+        <%= render "shared/user_actions",
+          modal_id: "signupModal",
+          action_id: "user-register",
+          action_path: new_users_path
+        %>
+        <%= render "shared/user_actions",
+          modal_id: "signInModal",
+          action_id: "user-login",
+          action_path: new_sessions_path
+        %>
       <% end %>
     </header>
 

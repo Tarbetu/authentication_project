@@ -1,62 +1,63 @@
-<%= form_with model: @user, url: users_path, method: :put do |form| %>
-  <%= render partial: "shared/form_errors", locals: { object: form.object } %>
+<%= turbo_frame_tag "user-edit" do %>
+  <%= form_with model: @user, url: users_path, method: :put, data: { turbo_frame: "_top" } do |form| %>
+    <%= render partial: "shared/form_errors", locals: { object: form.object } %>
 
-  <div class="m-2">
-    <%= form.label :email, "Current Email", class: "form-label" %>
-    <%= form.email_field :email, disabled: true,
-      class: "form_control",
-      "aria-describedby": "emailHelp"
-    %>
-    <p class="form-text" id="currentEmailHelp">
-      This is your current email which we spam
-    </p>
-  </div>
+    <div class="m-2">
+      <%= form.label :email, "Current Email", class: "form-label" %>
+      <%= form.email_field :email, disabled: true,
+        class: "form_control",
+        "aria-describedby": "emailHelp"
+      %>
+      <p class="form-text" id="currentEmailHelp">
+        This is your current email which we spam
+      </p>
+    </div>
 
-  <div class="mb-2">
-    <%= form.label :unconfirmed_email, "New Email", class: "form-label" %>
-    <%= form.text_field :unconfirmed_email,
-      class:"form-control",
-      "aria-describedby": "newPreyHelp"
-    %>
-    <p class="form-text" id="newPreyHelp">
-      New email? You can type your new email here.
-    </p>
-  </div>
+    <div class="mb-2">
+      <%= form.label :unconfirmed_email, "New Email", class: "form-label" %>
+      <%= form.text_field :unconfirmed_email,
+        class:"form-control",
+        "aria-describedby": "newPreyHelp"
+      %>
+      <p class="form-text" id="newPreyHelp">
+        New email? You can type your new email here.
+      </p>
+    </div>
 
-  <div class="mb-2">
-    <%= form.label :password, "Password (leave blank if you don't want to change)",
-      class: "form-label" %>
-    <%= form.password_field :password, class: "form-control" %>
-  </div>
+    <div class="mb-2">
+      <%= form.label :password, "Password (leave blank if you don't want to change)",
+        class: "form-label" %>
+      <%= form.password_field :password, class: "form-control" %>
+    </div>
 
-  <div class="mb-2">
-    <%= form.label :password_confirmation, class: "form-label" %>
-    <%= form.password_field :password_confirmation, class: "form-control" %>
-  </div>
+    <div class="mb-2">
+      <%= form.label :password_confirmation, class: "form-label" %>
+      <%= form.password_field :password_confirmation, class: "form-control" %>
+    </div>
 
-  <div class="mb-2">
-    <%= form.label :current_password, "Current password (required)",
-      class: "form-label" %>
-    <%= form.password_field :current_password, required: true, class: "form-control" %>
-  </div>
+    <div class="mb-2">
+      <%= form.label :current_password, "Current password (required)",
+        class: "form-label" %>
+      <%= form.password_field :current_password, required: true, class: "form-control" %>
+    </div>
 
-  <%= form.submit "Update Account", class: "btn btn-primary" %>
+    <%= form.submit "Update Account", class: "btn btn-primary" %>
 
-  <% if @active_sessions.any? %>
-    <h2 class="mt-4">Current Logins</h2>
-    <table class="table table-hover table-striped">
-      <thead>
-        <tr>
-          <th scope="col">User Agent</th>
-          <th scope="col">IP Address</th>
-          <th scope="col">Signed In At</th>
-          <th scope="col"></th>
-        </tr>
-      </thead>
-      <tbody>
-        <%= render @active_sessions %>
-      </tbody>
-    </table>
+    <% if @active_sessions.any? %>
+      <h2 class="mt-4">Current Logins</h2>
+      <table class="table table-hover table-striped">
+        <thead>
+          <tr>
+            <th scope="col">User Agent</th>
+            <th scope="col">IP Address</th>
+            <th scope="col">Signed In At</th>
+            <th scope="col"></th>
+          </tr>
+        </thead>
+        <tbody>
+          <%= render @active_sessions %>
+        </tbody>
+      </table>
+    <% end %>
   <% end %>
 <% end %>
-
