@@ -1,6 +1,6 @@
 <div class="roles">
   <% @roles.find_each do |role| %>
-    <%= turbo_frame_tag dom_id(role), src: edit_role_path(role), "data-turbo-frame": "_top" %>
+    <%= turbo_frame_tag dom_id(role), src: edit_role_path(role) %>
   <% end %>
   <% if @roles.empty? %>
     <em>Role does not found</em>

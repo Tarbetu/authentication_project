@@ -1,0 +1,8 @@
+<div class="grants">
+  <% @grants.find_each do |grant| %>
+    <%= turbo_frame_tag dom_id(grant), src: edit_grant_path(grant) %>
+  <% end %>
+  <% if @grants.empty? %>
+    <em>Grant does not found</em>
+  <% end %>
+</div>

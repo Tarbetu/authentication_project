@@ -1,0 +1,4 @@
+<%= turbo_frame_tag dom_id(@grant) do %>
+  <%= render "form", grant: @grant %>
+  <%= button_to "Delete This Grant", grant_role(@grant), method: :delete, class: "btn btn-danger" %>
+<% end %>

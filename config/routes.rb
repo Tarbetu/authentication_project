@@ -15,6 +15,9 @@ Rails.application.routes.draw do
   resources :roles, except: %i[index show] do
     collection { post :search }
   end
+  resources :grants, except: %i[index show] do
+    collection { post :search }
+  end
   resources :confirmations, only: %i[create edit new], param: :confirmation_token
   resources :passwords, except: %i[index destroy show], param: :password_reset_token
   resources :active_sessions, only: [:destroy] do

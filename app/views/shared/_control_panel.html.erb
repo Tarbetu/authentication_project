@@ -50,7 +50,7 @@
             id="addRoleTab"
             class="tab-pane fade show active"
             role="tabpanel"
-            aria-labelledby="role-tab">
+            aria-labelledby="new-role-tab">
             <%= turbo_frame_tag "new_role", src: new_role_path %>
             <div id="roleCreatedMessage"></div>
           </div>
@@ -58,7 +58,7 @@
             id="searchRoleTab"
             class="tab-pane fade"
             role="tabpanel"
-            aria-labelledby="role-tab">
+            aria-labelledby=search-role-tab">
             <div id="roleUpdatedMessage"></div>
             <%= render "shared/search", path: search_roles_path %>
             <div id="roleResult"></div>
@@ -67,15 +67,18 @@
             id="newGrantTab"
             class="tab-pane fade"
             role="tabpanel"
-            aria-labelledby="role-tab">
-            ###Dinamik Arama eklenecek###
+            aria-labelledby="new-grant-tab">
+            <%= turbo_frame_tag "new_grant", src: new_grant_path %>
+            <div id="grantCreatedMessage"></div>
           </div>
           <div
             id="searchGrantTab"
             class="tab-pane fade"
             role="tabpanel"
-            aria-labelledby="role-tab">
-            ###Dinamik Arama eklenecek###
+            aria-labelledby="grant-search-tab">
+            <div id="grantUpdatedMessage"></div>
+            <%= render "shared/search", path: search_grants_path %>
+            <div id="grantCreatedMessage"></div>
           </div>
       </div>
       <div class="modal-footer">
