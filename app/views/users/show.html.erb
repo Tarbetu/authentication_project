@@ -1,0 +1,35 @@
+<%= turbo_frame_tag dom_id(@user), "data_turbo_frame": "_top" do %>
+  <div class="card m-4">
+    <div class="card-header">
+      <h1><%= @user.email %></h1>
+    </div>
+    <div class="card-body">
+      <h3><%= @user.role.name %></h3>
+      <h5>This <%= @user.role.name %> can able to:</h5>
+      <ul class="list-group list-group-flush m-8">
+        <% @user.prettier_grants.each do |grant| %>
+          <li class="list-group-item"><%= grant %></li>
+        <% end %>
+      </ul>
+      <% if current_user.granted_for? "manage_users" %>
+        <%= form_with url: update_role_user_path(@user), data: { turbo_frame: "_top" } do |form| %>
+          <%= form.label :role_name, "Change this users role", class: "form-label" %>
+          <%= form.text_field :role_name,
+            class: "form-control",
+            list: "available_roles",
+            placeholder: @user.role.name
+          %>
+          <datalist id="available_roles">
+            <% Role.all.find_each do |role| %>
+              <option value="<%= role.name %>">
+            <% end %>
+          </datalist>
+          <%= form.submit class: "btn btn-outline-dark" %>
+        <% end %>
+        <% unless current_user == @user %>
+          <%= button_to "Delete This #{@user.role.name}", user_path(@user), class: "mt-2 text-center btn btn-danger", method: :delete %>
+        <% end %>
+      <% end %>
+    </div>
+  </div>
+<% end %>

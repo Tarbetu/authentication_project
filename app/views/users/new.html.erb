@@ -1,6 +1,6 @@
-<turbo-frame id="user-register">
+<%= turbo_frame_tag "user-register" do %>
   <main class="user-form text-center">
-    <%= form_with model: @user, url: users_path, class: "form-signin" do |form| %>
+    <%= form_with model: @user, class: "form-signin" do |form| %>
       <%= render partial: "shared/form_errors", locals: { object: form.object } %>
       <h1 class="h1 mb-3 fw-normal">Sign-up for get spams every day</h1>
 
@@ -34,5 +34,5 @@
       <%= form.submit "Register", class: "w-100 btn btn-lg btn-primary" %>
     <% end %>
   </main>
-</turbo-frame>
+<% end %>
 <%= render "shared/session_links", purpose: :register %>

@@ -4,6 +4,17 @@
      <%= post.title %>
     </h1>
     <%= content_tag :div, post.body, class: "card-text" %>
-    <%= post.user.email %> - <%= post.user.role.name %>
+    <button
+        class="btn btn-primary"
+        type="button"
+        data-bs-toggle="modal"
+        data-bs-target="#showUserModal<%= post.user.id %>">
+        <%= post.user.email %> - <%= post.user.role.name %>
+    </button>
   </div>
+  <%= render "shared/user_actions",
+    modal_id: "showUserModal#{post.user.id}",
+    action_id: dom_id(post.user),
+    action_path: user_path(post.user)
+  %>
 </div>

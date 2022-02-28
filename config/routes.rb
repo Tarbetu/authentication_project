@@ -7,9 +7,14 @@ Rails.application.routes.draw do
     collection { get 'about' }
   end
 
-  resource :users, except: %i[show index]
   resource :sessions, only: %i[new create destroy]
+  resources :users, except: %i[index] do
+    member { post :update_role }
+  end
   resources :posts
+  resources :roles, except: %i[index show] do
+    collection { post :search }
+  end
   resources :confirmations, only: %i[create edit new], param: :confirmation_token
   resources :passwords, except: %i[index destroy show], param: :password_reset_token
   resources :active_sessions, only: [:destroy] do

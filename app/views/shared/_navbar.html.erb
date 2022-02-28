@@ -30,7 +30,7 @@
           <button
               class="btn btn-secondary d-flex"
               type="button"
-              data-bs-toggle="modal" data-bs-target="#signupModal">
+              data-bs-toggle="modal" data-bs-target="#signUpModal">
               Sign-up</button>
         <% else %>
           <button
@@ -38,9 +38,10 @@
               type="button"
               data-bs-toggle="modal" data-bs-target="#editUserModal">
               <%= current_user.email %></button>
-          <% if current_user.role.can_manage_users? %>
+          <% if current_user.granted_for? "manage_users" %>
               <button
-                class="btn btn-warning d-flex mr-2"
+                class="btn btn-warning d-flex"
+                type="button"
                 data-bs-toggle="modal" data-bs-target="#manageUser">
                 Rule Them All!</button>
           <% end %>

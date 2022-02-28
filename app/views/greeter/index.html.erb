@@ -2,8 +2,8 @@
   <h1 class="fw-light text-decoration-underline">Welcome To Authorization Project!</h1>
   <% unless user_signed_in?  %>
     <p>You must authorize yourself or... else!</p>
-    <%= link_to "Authorize!", new_users_path, class: "btn btn-primary" %>
-    <p>(Ssssh. Hey kid! Wanna some bootstrap modal? Try the navbar ;)</p>
+    <%= link_to "Authorize!", new_user_path, class: "btn btn-primary" %>
+    <p>(Ssssh. Hey kid! Wanna some cool bootstrap modal? Try the navbar ;)</p>
   <% else %>
     <p>Welcome our dear user!</p>
     <p>We will bang this email address with spams: </p>

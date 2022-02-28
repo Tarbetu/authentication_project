@@ -19,7 +19,7 @@ class ActiveSessionsController < ApplicationController
     @active_session.destroy
 
     if current_user
-      redirect_to edit_users_path, notice: 'Session deleted'
+      redirect_to edit_user_path(current_user), notice: 'Session deleted'
     else
       forget_active_session
       reset_session

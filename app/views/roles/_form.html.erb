@@ -1,0 +1,13 @@
+<%= form_with model: role do |form| %>
+  <%= form.label :name, class: "h4 form-label" %>
+  <%= form.text_field :name, class: "form-control" %>
+  <%= form.label :grants, class: "h4 form-label" %>
+    <%= form.collection_check_boxes :grant_ids, Grant.all, :id, :name do |check| %>
+      <div class="form-check">
+        <%= check.check_box class: "form-check-input" %>
+        <%= check.label class: "form-check-label" %>
+      </div>
+    <% end %>
+
+  <%= form.submit class: "btn btn-primary" %>
+<% end %>

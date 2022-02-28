@@ -1,16 +1,100 @@
-<div id="manageUser" class="modal fade" tabindex="-1" aria-hidden="true">
+<div id="manageUser" class="modal fade p-10" tabindex="-1" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
-     <div class="modal-header">
-       <h1 id="manageUserLabel" class="modal-title">Manage all of the Peasants!</h1>
-       <button class="btn-close" type="button" data-bs-dismiss="modal"
-       aria-label="Close"></button>
-     </div>
-     <div class="modal-body">
-       Some settings about da user
-     </div>
-     <div class="modal-footer">
-     </div>
+      <div class="modal-header">
+        <h1 id="manageUserLabel" class="modal-title">Manage all of the Peasants!</h1>
+        <button class="btn-close" type="button" data-bs-dismiss="modal"
+        aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <ul id="roleTab" class="nav nav-tabs" role="tablist">
+          <li class="nav-item" role="presentation">
+            <button
+                id="add-role-tab"
+                class="nav-link active"
+                data-bs-toggle="tab" data-bs-target="#addRoleTab"
+                type="button" role="tab"
+                aria-controls="addRoleTab" aria-selected="true">
+                Add New Role</button>
+          </li>
+          <li clas="nav-item" role="presentation">
+            <button
+                id="search-role-tab"
+                class="nav-link"
+                data-bs-toggle="tab" data-bs-target="#searchRoleTab"
+                type="button" role="tab"
+                aria-controls="searchRoleTab" aria-selected="false">
+                Edit Role</button>
+          </li>
+          <li clas="nav-item" role="presentation">
+            <button
+                id="new-grant-tab"
+                class="nav-link"
+                data-bs-toggle="tab" data-bs-target="#newGrantTab"
+                type="button" role="tab"
+                aria-controls="newGrantTab" aria-selected="false">
+                Add New Grant</button>
+          </li>
+          <li clas="nav-item" role="presentation">
+            <button
+                id="search-grant-tab"
+                class="nav-link"
+                data-bs-toggle="tab" data-bs-target="#searchGrantTab"
+                type="button" role="tab"
+                aria-controls="searchGrantTab" aria-selected="false">
+                Search New Grant</button>
+          </li>
+        </ul>
+        <div id="tabs" class="tab-content p-4">
+          <div
+            id="addRoleTab"
+            class="tab-pane fade show active"
+            role="tabpanel"
+            aria-labelledby="role-tab">
+            <%= turbo_frame_tag "new_role", src: new_role_path %>
+            <div id="roleCreatedMessage"></div>
+          </div>
+          <div
+            id="searchRoleTab"
+            class="tab-pane fade"
+            role="tabpanel"
+            aria-labelledby="role-tab">
+            <div id="roleUpdatedMessage"></div>
+            <%= render "shared/search", path: search_roles_path %>
+            <div id="roleResult"></div>
+          </div>
+          <div
+            id="newGrantTab"
+            class="tab-pane fade"
+            role="tabpanel"
+            aria-labelledby="role-tab">
+            ###Dinamik Arama eklenecek###
+          </div>
+          <div
+            id="searchGrantTab"
+            class="tab-pane fade"
+            role="tabpanel"
+            aria-labelledby="role-tab">
+            ###Dinamik Arama eklenecek###
+          </div>
+      </div>
+      <div class="modal-footer">
+        <a
+          class="btn btn-primary btn-sm" href="#information"
+          data-bs-toggle="collapse" role="button"
+          aria-expanded="false" aria-controls="information">Information about Grants</a>
+        <div id="information" class="collapse">
+          <p class="fs-6">
+            Note that almost every controller depends on the "manage_user" grants.<br/>
+            So be careful with when you play with this grant.<br/>
+            Likewise the post controller depends on
+            "read, write and delete_and_edit_others"
+            grants. <br/>
+            If you're not going to plan remove these controller,
+            don't interact with them.
+          </p>
+        </div>
+      </div>
     </div>
   </div>
 </div>

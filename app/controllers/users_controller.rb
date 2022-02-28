@@ -6,6 +6,13 @@ class UsersController < ApplicationController
   before_action :authenticate_user!, only: %i[edit destroy update]
   before_action :redirect_if_authenticated, only: %i[create new]
   before_action :set_current_user, only: %i[update edit]
+  before_action :check_permissions_for_manage_users, only: %i[update_role]
+
+  # @return [void]
+  def show
+    @user = User.find(params[:id])
+  end
+
   # @return [void]
   def create
     @user = User.new(create_user_params)
@@ -25,9 +32,16 @@ class UsersController < ApplicationController
   end
 
   def destroy
-    current_user.destroy
-    reset_session
-    redirect_to root_path, notice: 'Farewell, dear deleted user.'
+    @user = User.find(params[:id])
+    if @user == current_user
+      current_user.destroy
+      reset_session
+      redirect_to root_path, notice: 'Farewell, dear deleted user.'
+    else
+      @user.destroy
+      flash[:notice] = 'You delete this user, you monster!'
+      redirect_back(fallback_location: root_path)
+    end
   end
 
   def edit; end
@@ -35,7 +49,16 @@ class UsersController < ApplicationController
   def update
     unless @user.authenticate(params[:user][:current_password])
       flash.now[:error] = 'Incorrect Password'
-      render :edit, status: :unprocessable_entity
+      # render :edit, status: :unprocessable_entity
+      render(
+        turbo_stream: turbo_stream.update(
+          'user-edit',
+          partial: 'users/user',
+          locals: {
+            user: @user
+          }
+        )
+      )
       return
     end
 
@@ -50,6 +73,21 @@ class UsersController < ApplicationController
     end
 
     render :edit, status: :unprocessable_entity
+  end
+
+  # @return [void]
+  def update_role
+    @user = User.find(params[:id])
+
+    @user.role = Role.find_by(name: params[:role_name])
+
+    if @user.save
+      @user.cache_grants
+      redirect_to user_url(@user), notice: 'This users role successfully updated!'
+    else
+      flash[:alert] = "This user can't be updated the wanted role"
+      render :show, status: :unprocessable_entity
+    end
   end
 
   private

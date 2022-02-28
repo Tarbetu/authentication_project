@@ -12,20 +12,21 @@
   <body>
     <header>
       <%= render "shared/navbar" %>
-      <%= render "shared/alerts" %>
-      <% if user_signed_in? && current_user.granted_for?("manage_users") %>
+    <%= render "shared/alerts" %>
+    <% if user_signed_in? %>
+      <%= render "shared/user_actions",
+        modal_id: "editUserModal",
+        action_id: "user-edit",
+        action_path: edit_user_path(current_user)
+      %>
+      <% if current_user.granted_for?("manage_users") %>
         <%= render "shared/control_panel" %>
-      <% elsif user_signed_in? %>
+      <% end %>
+      <% else %>
         <%= render "shared/user_actions",
-          modal_id: "editUserModal",
-          action_id: "user-edit",
-          action_path: edit_users_path
-        %>
-      <% elsif !user_signed_in? %>
-        <%= render "shared/user_actions",
-          modal_id: "signupModal",
+          modal_id: "signUpModal",
           action_id: "user-register",
-          action_path: new_users_path
+          action_path: new_user_path
         %>
         <%= render "shared/user_actions",
           modal_id: "signInModal",

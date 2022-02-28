@@ -1,6 +1,6 @@
 <div class="btn-group d-flex fixed-buttom" role="group">
   <% button_classes = "btn btn-primary" %>
-  <% sign_up_button = link_to "Sign up", new_users_path, class: button_classes %>
+  <% sign_up_button = link_to "Sign up", new_user_path, class: button_classes %>
   <% login_button = link_to "Login", new_sessions_path, class: button_classes %>
   <% forget_password_button = link_to "Password Reseting", new_password_path, class: button_classes %>
   <% if purpose == :login %>

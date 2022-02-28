@@ -24,7 +24,7 @@ class User < ApplicationRecord
 
   has_secure_password
   has_many :active_sessions, dependent: :destroy
-  has_many :posts
+  has_many :posts, dependent: :destroy
   belongs_to :role
 
   validates :email,
@@ -122,6 +122,10 @@ class User < ApplicationRecord
     end
   end
 
+  def self.cache_every_users_grant
+    all.find_each(&:cache_grants)
+  end
+
   # This method queries and caches the grants field
   # @param grant [String]
   # @return [Boolean]
@@ -131,6 +135,12 @@ class User < ApplicationRecord
       role.grants.find_by(name: grant).present?
     else
       grants.elements.include? grant
+    end
+  end
+
+  def prettier_grants
+    grants.elements.map do |grant|
+      grant.sub('_', ' ').titleize
     end
   end
 
